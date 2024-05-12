@@ -50,3 +50,7 @@ const float rollFrictionEarthRubberCoefficient = 0.0013f;
 const float slideFrictionEarthRubberCoefficient = 100.0f;
 ```
   
+![image](https://github.com/u-an-i/tyre-simulation/assets/84718885/0468143e-afd6-43cf-82ac-03f018947aef) ![image](https://github.com/u-an-i/tyre-simulation/assets/84718885/023ea7b7-2f24-4753-aa9f-2a46ea05e998) ![image](https://github.com/u-an-i/tyre-simulation/assets/84718885/92976408-d6ad-471d-bd39-f93459609748) ![image](https://github.com/u-an-i/tyre-simulation/assets/84718885/d28ea8c9-61f6-4d12-afc0-d3d2c6d235c5)
+
+
+
