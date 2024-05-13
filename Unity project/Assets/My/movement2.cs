@@ -1,4 +1,3 @@
-using MKStudio.EasyTweak;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -11,51 +10,10 @@ public class movement2 : MonoBehaviour
 
     const float tyreRadius = .991199f;
     const float tyreWidth = 1f;
-    float tyreMass = 40f;
-    float unitTyrePressure = 0.25f;
-    float dampening = 1200f;                   // 100 is minimum dampening for not bouncing back too high
-    float tyreSpringConstant = 30000f;         // 5700 is minimum to not fall through ground when let fall from height 40
-
-    [EasyTweak("tyre radius", "physics")]
-    public string TyreRadius
-    {
-        get
-        {
-            return "0.991199";
-        }
-    }
-    [EasyTweak("tyre width", "physics")]
-    public string TyreWidth
-    {
-        get
-        {
-            return "1";
-        }
-    }
-    [EasyTweak(1f, 100f, "tyre mass", "physics")]
-    public float TyreMass
-    {
-        get { return this.tyreMass; }
-        set { this.tyreMass = value; }
-    }
-    [EasyTweak(0.01f, 1f, "tyre pressure", "physics")]
-    public float TyrePressure
-    {
-        get { return this.unitTyrePressure; }
-        set { this.unitTyrePressure = value; }
-    }
-    [EasyTweak(100f, 3000f, "tyre rubber dampening", "physics")]
-    public float Dampening
-    {
-        get { return this.dampening; }
-        set { this.dampening = value; }
-    }
-    [EasyTweak(5700f, 100000f, "tyre rubber spring constant", "physics")]
-    public float TyreRubberSpringConstant
-    {
-        get { return this.tyreSpringConstant; }
-        set { this.tyreSpringConstant = value; }
-    }
+    public static float tyreMass = 40f;
+    public static float unitTyrePressure = 0.25f;
+    public static float dampening = 1200f;                   // 100 is minimum dampening for not bouncing back too high
+    public static float tyreSpringConstant = 30000f;         // 5700 is minimum to not fall through ground when let fall from height 40
 
     const int numExtraAngleDirs = 8;
     const float initialLateralOffsetFactor = 1.0f / 3;
@@ -65,28 +23,9 @@ public class movement2 : MonoBehaviour
     Vector3 contactDir;
 
     static Vector3 gravity = new Vector3(0, -9.81f, 0);
-    float airFrictionCoefficient = 0.01f;
-    float rollFrictionEarthRubberCoefficient = 0.0013f;
-    float slideFrictionEarthRubberCoefficient = 100.0f;
-
-    [EasyTweak(0f, 0.1f, "air friction", "physics")]
-    public float AirFriction
-    {
-        get { return this.airFrictionCoefficient; }
-        set { this.airFrictionCoefficient = value; }
-    }
-    [EasyTweak(0f, 0.01f, "roll friction (forward motion due to roll friction on ground is hardcoded, this is deceleration of rolling on ground)", "physics")]
-    public float RollFriction
-    {
-        get { return this.rollFrictionEarthRubberCoefficient; }
-        set { this.rollFrictionEarthRubberCoefficient = value; }
-    }
-    [EasyTweak(0f, 250f, "slide friction", "physics")]
-    public float SlideFriction
-    {
-        get { return this.slideFrictionEarthRubberCoefficient; }
-        set { this.slideFrictionEarthRubberCoefficient = value; }
-    }
+    public static float airFrictionCoefficient = 0.01f;
+    public static float rollFrictionEarthRubberCoefficient = 0.0013f;
+    public static float slideFrictionEarthRubberCoefficient = 100.0f;
 
     Vector3 velocity = Vector3.zero;
     Vector3 oldAcceleration = Vector3.zero;

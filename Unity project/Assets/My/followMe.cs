@@ -1,4 +1,3 @@
-using MKStudio.EasyTweak;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -10,29 +9,15 @@ public class followMe : MonoBehaviour
     private Transform camTransform;
 
 
-    /*public string groundLayerName = "plane";
+    public string groundLayerName = "plane";
     private int groundLayer;
-    RaycastHit[] results = new RaycastHit[1];*/
+    RaycastHit[] results = new RaycastHit[1];
 
-    //Outline outline;
+    Outline outline;
 
 
-    int mouseXSensitivity = 1500;
-    int mouseYSensitivity = 2250;
-
-    [EasyTweak(500, 2500, "mouse horizontal movement sensitivity", "controls")]
-    public int MouseXSensitivity
-    {
-        get { return this.mouseXSensitivity; }
-        set { this.mouseXSensitivity = value; }
-    }
-
-    [EasyTweak(1000, 3500, "mouse vertical movement sensitivity", "controls")]
-    public int MouseYSensitivity
-    {
-        get { return this.mouseYSensitivity; }
-        set { this.mouseYSensitivity = value; }
-    }
+    public static int mouseXSensitivity = 1500;
+    public static int mouseYSensitivity = 2250;
 
 
     static private int count = 0;
@@ -71,9 +56,10 @@ public class followMe : MonoBehaviour
     {
         enabled = update;
 
-        //groundLayer = 1 << LayerMask.NameToLayer(groundLayerName);
+        groundLayer = 1 << LayerMask.NameToLayer(groundLayerName);
 
-        //outline = GetComponent<Outline>();
+        outline = GetComponent<Outline>();
+        outline.enabled = false;
     }
 
     void Awake()
@@ -86,10 +72,7 @@ public class followMe : MonoBehaviour
             zoomStart = currentZoom;
             targetEulerAngles = camTransform.eulerAngles;
             currentEulerAngles = targetEulerAngles;
-            if (++count > 1)
-            {
-                camToCenter = true;
-            }
+            camToCenter = ++count > 1;
         }
         else
         {
@@ -124,11 +107,8 @@ public class followMe : MonoBehaviour
             currentZoom = zoomStart + (zoomTarget - zoomStart) * zoomProgress;
             camTransform.position -= currentZoom * camTransform.forward;
             camTransform.LookAt(camToCenter ? center : transform.position);
-            /*Vector3 occlusionDir = camTransform.position - transform.position;
-            if (Physics.RaycastNonAlloc(transform.position, occlusionDir, results, occlusionDir.magnitude, groundLayer) > 0)
-            {
-
-            }*/
+            Vector3 occlusionDir = camTransform.position - transform.position;
+            outline.enabled = Physics.RaycastNonAlloc(transform.position, occlusionDir, results, occlusionDir.magnitude, groundLayer) > 0;
         }
     }
 }
